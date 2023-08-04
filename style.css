@@ -1,0 +1,300 @@
+body {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #282828;
+}
+
+.loader-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.loader[data-type$="-round"] {
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #3498db;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.loader[data-type$="-bar"] {
+  width: 100px;
+  height: 20px;
+  background-color: #f3f3f3;
+  animation: movebar 2s linear infinite;
+}
+
+@keyframes movebar {
+  0% {
+    background-color: #f3f3f3;
+    width: 0;
+  }
+  50% {
+    background-color: #3498db;
+    width: 100px;
+  }
+  100% {
+    background-color: #f3f3f3;
+    width: 0;
+  }
+}
+
+.loader[data-type$="-pulse"] {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #3498db;
+  animation: pulse 1s linear infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(52, 152, 219, 0.7);
+  }
+  70% {
+    transform: scale(1);
+    box-shadow: 0 0 0 10px rgba(52, 152, 219, 0);
+  }
+  100% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(52, 152, 219, 0);
+  }
+}
+
+.loader[data-type$="-wave"] {
+  --r1: 154%;
+  --r2: 68.5%;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: radial-gradient(
+      var(--r1) var(--r2) at top,
+      #0000 79.5%,
+      #766df4 80%
+    ),
+    radial-gradient(var(--r1) var(--r2) at bottom, #766df4 79.5%, #0000 80%),
+    radial-gradient(var(--r1) var(--r2) at top, #0000 79.5%, #766df4 80%),
+    #e4e4ed;
+  background-size: 50.5% 220%;
+  background-position: -100% 0%, 0% 0%, 100% 0%;
+  background-repeat: no-repeat;
+  animation: wave 2s infinite linear;
+}
+@keyframes wave {
+  33% {
+    background-position: 0% 33%, 100% 33%, 200% 33%;
+  }
+  66% {
+    background-position: -100% 66%, 0% 66%, 100% 66%;
+  }
+  100% {
+    background-position: 0% 100%, 100% 100%, 200% 100%;
+  }
+}
+
+.loader[data-type$="-playDots1"] {
+  width: 32px;
+  height: 32px;
+  --c: radial-gradient(circle closest-side, #766df4 90%, #0000);
+  background: var(--c) 0 0, var(--c) 0 100%, var(--c) 100% 100%;
+  background-size: 12px 12px;
+  background-repeat: no-repeat;
+  animation: playDots1 1s infinite linear;
+}
+@keyframes playDots1 {
+  25% {
+    background-position: 100% 0, 0 100%, 100% 100%;
+  }
+  50% {
+    background-position: 100% 0, 0 0, 100% 100%;
+  }
+  75% {
+    background-position: 100% 0, 0 0, 0 100%;
+  }
+  100% {
+    background-position: 100% 100%, 0 0, 0 100%;
+  }
+}
+
+.loader[data-type$="-playDots2"] {
+  width: 50px;
+  height: 28px;
+  background: radial-gradient(farthest-side, #766df4 90%, #0000) 0 50%/12px 12px,
+    radial-gradient(farthest-side at bottom, #766df4 90%, #0000) 50%
+      calc(50% - 3px) / 12px 6px,
+    radial-gradient(farthest-side at top, #766df4 90%, #0000) 50%
+      calc(50% + 3px) / 12px 6px,
+    radial-gradient(farthest-side at bottom, #766df4 90%, #0000) 100%
+      calc(50% - 3px) / 12px 6px,
+    radial-gradient(farthest-side at top, #766df4 90%, #0000) 100%
+      calc(50% + 3px) / 12px 6px;
+  background-repeat: no-repeat;
+  animation: playDots2 1s infinite;
+}
+@keyframes playDots2 {
+  25% {
+    background-position: 0 50%, 50% 0, 50% 100%, 100% 0, 100% 100%;
+  }
+  50% {
+    background-position: 100% 50%, 0 0, 0 100%, 50% 0, 50% 100%;
+  }
+  75%,
+  100% {
+    background-position: 100% 50%, 0 calc(50% - 3px), 0 calc(50% + 3px),
+      50% calc(50% - 3px), 50% calc(50% + 3px);
+  }
+}
+
+.loader[data-type$="-playDots3"] {
+  width: 70px;
+  height: 30px;
+  color: #766df4;
+  overflow: hidden;
+  position: relative;
+}
+.loader[data-type$="-playDots3"]::before {
+  content: "";
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  inset: 0;
+  margin: auto;
+  background: #766df4;
+  transform-origin: bottom;
+  animation: playDots3-1 3s infinite;
+}
+.loader[data-type$="-playDots3"]::after {
+  content: "";
+  position: absolute;
+  width: 8px;
+  height: 14px;
+  bottom: calc(50% - 4px);
+  background: #766df4;
+  animation: playDots3-2 3s infinite;
+}
+
+@keyframes playDots3-1 {
+  0%,
+  10% {
+    transform: translate(0) scale(1);
+    box-shadow: 60px 0, 60px 0;
+  }
+  20%,
+  40% {
+    transform: translate(20px) scale(1);
+    box-shadow: 60px 0, 60px 0;
+  }
+  48% {
+    transform: translate(20px) scale(1);
+    box-shadow: 8px 0, 60px 0;
+  }
+  50% {
+    transform: translate(20px) scale(1.5);
+    box-shadow: 0 0, 60px 0;
+  }
+  58% {
+    transform: translate(20px) scale(1.5);
+    box-shadow: 0 0, 8px 0;
+  }
+  60%,
+  70% {
+    transform: translate(20px) scale(2);
+    box-shadow: 0 0, 0 0;
+  }
+
+  85% {
+    transform: translate(-50px) scale(2);
+    box-shadow: 0 0, 0 0;
+  }
+  87% {
+    transform: translate(-50px) scale(1);
+    box-shadow: 0 0, 0 0;
+  }
+  100% {
+    transform: translate(0) scale(1);
+    box-shadow: 0 0, 0 0;
+  }
+}
+
+@keyframes playDots3-2 {
+  20%,
+  70% {
+    left: 50%;
+  }
+  0%,
+  10%,
+  85%,
+  100% {
+    left: -25px;
+  }
+}
+
+.loader[data-type$="-scroll"] {
+  width: 48px;
+  height: 86px;
+  position: relative;
+}
+
+.loader[data-type$="-scroll"]::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 0;
+  transform: translate(-50%, 50%);
+  width: 10px;
+  height: 10px;
+  background: #3498db; /* Change the color to blue */
+  border-radius: 50%;
+  animation: bounce 1s ease-in infinite alternate;
+}
+
+.loader[data-type$="-scroll"]::after {
+  content: "";
+  left: 0;
+  top: 0;
+  position: absolute;
+  width: 48px;
+  height: 86px;
+  box-sizing: border-box;
+  border: 2px solid #3498db; /* Change the color to blue */
+  border-radius: 50% 50% 50% 50% / 25% 25% 25% 25%;
+  animation: kick 1s ease-in infinite alternate;
+}
+
+@keyframes bounce {
+  0% {
+    top: 0%;
+    opacity: 1;
+  }
+  100% {
+    top: 75%;
+    opacity: 0.2;
+  }
+}
+
+@keyframes kick {
+  0%,
+  75% {
+    height: 86px;
+  }
+  100% {
+    height: 78px;
+  }
+}
