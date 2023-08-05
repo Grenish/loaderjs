@@ -1,3 +1,10 @@
+:root {
+  --animation-speed-slow: 3s;
+  --animation-speed-normal: 2s;
+  --animation-speed-fast: 1s;
+}
+
+
 body {
   margin: 0;
   padding: 0;
@@ -14,13 +21,17 @@ body {
   align-items: center;
 }
 
+
+
+
+
 .loader[data-type$="-round"] {
   border: 4px solid #f3f3f3;
   border-top: 4px solid #3498db;
   border-radius: 50%;
   width: 50px;
   height: 50px;
-  animation: spin 1s linear infinite;
+  animation: spin var(--animation-speed-normal) linear infinite;
 }
 
 @keyframes spin {
@@ -36,7 +47,7 @@ body {
   width: 100px;
   height: 20px;
   background-color: #f3f3f3;
-  animation: movebar 2s linear infinite;
+  animation: movebar var(--animation-speed-normal) linear infinite;
 }
 
 @keyframes movebar {
@@ -59,7 +70,7 @@ body {
   height: 40px;
   border-radius: 50%;
   background-color: #3498db;
-  animation: pulse 1s linear infinite;
+  animation: pulse var(--animation-speed-normal) linear infinite;
 }
 
 @keyframes pulse {
@@ -94,7 +105,7 @@ body {
   background-size: 50.5% 220%;
   background-position: -100% 0%, 0% 0%, 100% 0%;
   background-repeat: no-repeat;
-  animation: wave 2s infinite linear;
+  animation: wave var(--animation-speed-normal) infinite linear;
 }
 @keyframes wave {
   33% {
@@ -115,7 +126,7 @@ body {
   background: var(--c) 0 0, var(--c) 0 100%, var(--c) 100% 100%;
   background-size: 12px 12px;
   background-repeat: no-repeat;
-  animation: playDots1 1s infinite linear;
+  animation: playDots1 var(--animation-speed-normal) infinite linear;
 }
 @keyframes playDots1 {
   25% {
@@ -145,7 +156,7 @@ body {
     radial-gradient(farthest-side at top, #766df4 90%, #0000) 100%
       calc(50% + 3px) / 12px 6px;
   background-repeat: no-repeat;
-  animation: playDots2 1s infinite;
+  animation: playDots2 var(--animation-speed-normal) infinite;
 }
 @keyframes playDots2 {
   25% {
@@ -262,7 +273,7 @@ body {
   height: 10px;
   background: #3498db; /* Change the color to blue */
   border-radius: 50%;
-  animation: bounce 1s ease-in infinite alternate;
+  animation: bounce var(--animation-speed-normal) ease-in infinite alternate;
 }
 
 .loader[data-type$="-scroll"]::after {
@@ -275,7 +286,7 @@ body {
   box-sizing: border-box;
   border: 2px solid #3498db; /* Change the color to blue */
   border-radius: 50% 50% 50% 50% / 25% 25% 25% 25%;
-  animation: kick 1s ease-in infinite alternate;
+  animation: kick var(--animation-speed-normal) ease-in infinite alternate;
 }
 
 @keyframes bounce {
@@ -296,5 +307,97 @@ body {
   }
   100% {
     height: 78px;
+  }
+}
+
+.loader[data-type$="-square"] {
+  width: 40px;
+  height: 40px;
+  color: #3498db; /* Change the color to blue */
+  background: linear-gradient(currentColor 0 0),
+    linear-gradient(currentColor 0 0), linear-gradient(currentColor 0 0),
+    linear-gradient(currentColor 0 0);
+  background-size: 21px 21px;
+  background-repeat: no-repeat;
+  animation: sh5 1.5s infinite cubic-bezier(0.3, 1, 0, 1);
+}
+
+@keyframes sh5 {
+  0% {
+    background-position: 0 0, 100% 0, 100% 100%, 0 100%;
+  }
+  33% {
+    background-position: 0 0, 100% 0, 100% 100%, 0 100%;
+    width: 60px;
+    height: 60px;
+  }
+  66% {
+    background-position: 100% 0, 100% 100%, 0 100%, 0 0;
+    width: 60px;
+    height: 60px;
+  }
+  100% {
+    background-position: 100% 0, 100% 100%, 0 100%, 0 0;
+  }
+}
+
+.loader[data-type$="-lock"] {
+  width: 64px;
+  height: 44px;
+  position: relative;
+  border: 5px solid #3498db; /* Change the border color to blue */
+  border-radius: 8px;
+  animation: lockBounce var(--animation-speed-normal) ease-in-out infinite;
+}
+
+.loader[data-type$="-lock"]::before {
+  content: "";
+  position: absolute;
+  border: 5px solid #3498db; /* Change the border color to blue */
+  width: 32px;
+  height: 28px;
+  border-radius: 50% 50% 0 0;
+  left: 50%;
+  top: -19px;
+  transform: translate(-50%, -50%);
+}
+
+.loader[data-type$="-lock"]::after {
+  content: "";
+  position: absolute;
+  transform: translate(-50%, -50%);
+  left: 50%;
+  top: 50%;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #3498db; /* Change the color to blue */
+  box-shadow: 16px 0 #3498db, -16px 0 #3498db; /* Change the shadow color to blue */
+  animation: lockFlash 0.5s ease-out infinite alternate;
+}
+
+@keyframes lockBounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-12px);
+  }
+}
+
+@keyframes lockFlash {
+  0% {
+    background-color: rgba(52, 152, 219, 0.25); /* Change the color to blue */
+    box-shadow: 16px 0 rgba(52, 152, 219, 0.25), -16px 0 rgba(159, 220, 248, 1); /* Change the shadow color to its respective highlight color */
+  }
+  50% {
+    background-color: #3498db; /* Change the color to blue */
+    box-shadow: 16px 0 rgba(52, 152, 219, 0.25),
+      -16px 0 rgba(52, 152, 219, 0.25); /* Change the shadow color to blue with opacity */
+  }
+  100% {
+    background-color: rgba(52, 152, 219, 0.25); /* Change the color to blue */
+    box-shadow: 16px 0 rgba(159, 220, 248, 1), -16px 0 rgba(52, 152, 219, 0.25); /* Change the shadow color to its respective highlight color */
   }
 }
