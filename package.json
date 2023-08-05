@@ -1,0 +1,24 @@
+{
+  "name": "loaderjs",
+  "version": "1.0.0",
+  "description": "loaderjs is a lightweight JavaScript library for adding customizable loading animations to your web projects. With various loader types and animation speeds, it provides an easy way to enhance user experience during loading processes.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Grenish/loaderjs.git"
+  },
+  "keywords": [
+    "loader",
+    "js",
+    "load"
+  ],
+  "author": "grenishrai",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Grenish/loaderjs/issues"
+  },
+  "homepage": "https://github.com/Grenish/loaderjs#readme"
+}
