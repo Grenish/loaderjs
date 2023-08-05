@@ -1,5 +1,5 @@
 {
-  "name": "loaderjs",
+  "name": "@grenishrai/loaderjs",
   "version": "1.0.0",
   "description": "loaderjs is a lightweight JavaScript library for adding customizable loading animations to your web projects. With various loader types and animation speeds, it provides an easy way to enhance user experience during loading processes.",
   "main": "index.js",
