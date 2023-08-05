@@ -1,5 +1,6 @@
 const default_options = {
   type: "loader-round",
+  speed: "normal",
 };
 
 export default class Loader {
@@ -9,6 +10,7 @@ export default class Loader {
     this.#loader = document.createElement("div");
     this.#loader.classList.add("loader");
     this.type = options?.type || default_options.type;
+    this.speed = options?.speed || default_options.speed;
     document.body.appendChild(this.#loader);
   }
 
@@ -29,6 +31,13 @@ export default class Loader {
         existingLoader.className = this.#loader.className;
         existingLoader.dataset.type = value;
       }
+    }
+  }
+
+  set speed(value) {
+    const validSpeeds = ["slow", "normal", "fast"];
+    if (validSpeeds.includes(value)) {
+      this.#loader.style.animationDuration = `var(--animation-speed-${value})`;
     }
   }
 }
