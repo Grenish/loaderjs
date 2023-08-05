@@ -1,7 +1,7 @@
 import Loader from './Loader.js';
 
 const loader = new Loader({
-    type : "loader-square",
-    speed: "fast"
+    type : "loader-lock",
+    speed: "normal"
 });
 
