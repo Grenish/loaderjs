@@ -1,10 +1,28 @@
 {
   "name": "@grenishrai/loaderjs",
-  "version": "1.0.0",
-  "description": "loaderjs is a lightweight JavaScript library for adding customizable loading animations to your web projects. With various loader types and animation speeds, it provides an easy way to enhance user experience during loading processes.",
+  "version": "2.0.0",
+  "description": "A professional, lightweight JavaScript library for customizable loading animations. Features TypeScript support, accessibility, event system, overlay support, and comprehensive error handling for modern web applications.",
   "main": "index.js",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./Loader.js",
+      "require": "./Loader.js"
+    },
+    "./style.css": "./style.css"
+  },
+  "files": [
+    "Loader.js",
+    "style.css",
+    "README.md",
+    "types.d.ts"
+  ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "echo \"Open index.html in browser to see demos\"",
+    "build": "echo \"No build step required - pure ES modules\"",
+    "lint": "echo \"No linting configured yet\"",
+    "typecheck": "echo \"No TypeScript compilation required - JSDoc types included\""
   },
   "repository": {
     "type": "git",
@@ -12,13 +30,39 @@
   },
   "keywords": [
     "loader",
-    "js",
-    "load"
+    "loading",
+    "spinner",
+    "animation",
+    "javascript",
+    "es6",
+    "module",
+    "accessibility",
+    "typescript",
+    "professional",
+    "overlay",
+    "events",
+    "error-handling",
+    "customizable",
+    "lightweight",
+    "modern",
+    "web-components"
   ],
-  "author": "grenishrai",
+  "author": {
+    "name": "grenishrai",
+    "url": "https://github.com/Grenish"
+  },
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/Grenish/loaderjs/issues"
   },
-  "homepage": "https://github.com/Grenish/loaderjs#readme"
+  "homepage": "https://github.com/Grenish/loaderjs#readme",
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead",
+    "not ie <= 11"
+  ]
 }
