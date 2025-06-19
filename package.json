@@ -4,6 +4,7 @@
   "description": "A professional, lightweight JavaScript library for customizable loading animations. Features TypeScript support, accessibility, event system, overlay support, and comprehensive error handling for modern web applications.",
   "main": "index.js",
   "type": "module",
+  "types": "types.d.ts",
   "exports": {
     ".": {
       "import": "./Loader.js",
