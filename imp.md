@@ -7,7 +7,7 @@ loader
 -playDots2
 -playDots3
 -scroll
--sqaure
+-square
 -lock
 
 speed
