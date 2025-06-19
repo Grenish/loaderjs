@@ -1,13 +1,835 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-    <link rel="stylesheet" href="style.css" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@grenishrai/loaderjs - Professional Loading Animations</title>
+    <meta name="description" content="Professional loading animation library with TypeScript support, accessibility, and comprehensive error handling">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-hover: #1d4ed8;
+            --secondary: #64748b;
+            --success: #059669;
+            --danger: #dc2626;
+            --warning: #d97706;
+            --background: #ffffff;
+            --surface: #f8fafc;
+            --border: #e2e8f0;
+            --text-primary: #0f172a;
+            --text-secondary: #64748b;
+            --text-muted: #94a3b8;
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            --radius: 8px;
+            --spacing: 1rem;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            background: var(--surface);
+            color: var(--text-primary);
+            line-height: 1.6;
+            font-size: 14px;
+            height: 100%;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--spacing);
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            padding: 3rem 0 2rem;
+        }
+
+        .header h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .version-badge {
+            background: var(--primary);
+            color: white;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .header p {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+
+        /* Controls */
+        .controls {
+            background: var(--background);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border);
+        }
+
+        .controls h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+        }
+
+        .control-grid {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .control-group {
+            flex: 1;
+            min-width: 180px;
+        }
+
+        .control-group label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        .control-group select,
+        .control-group input {
+            width: 100%;
+            padding: 0.5rem 0.75rem;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            background: var(--background);
+            font-size: 0.875rem;
+            transition: all 0.2s ease;
+        }
+
+        .control-group select:focus,
+        .control-group input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        /* Demo Grid */
+        .demo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .demo-card {
+            background: var(--background);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border);
+            transition: all 0.2s ease;
+        }
+
+        .demo-card:hover {
+            box-shadow: var(--shadow-md);
+            transform: translateY(-1px);
+        }
+
+        .demo-card h4 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .demo-card p {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+        }
+
+        .loader-preview {
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            margin-bottom: 1rem;
+            position: relative;
+        }
+
+        .loader-preview small {
+            color: var(--text-muted);
+            font-style: italic;
+            text-align: center;
+            font-size: 0.75rem;
+        }
+
+        .demo-buttons {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: var(--radius);
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            flex: 1;
+            min-width: 70px;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-hover);
+        }
+
+        .btn-secondary {
+            background: var(--secondary);
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #475569;
+        }
+
+        .btn-success {
+            background: var(--success);
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #047857;
+        }
+
+        .btn-danger {
+            background: var(--danger);
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #b91c1c;
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .btn:focus {
+            outline: 2px solid var(--primary);
+            outline-offset: 2px;
+        }
+
+        /* Console Section */
+        .console-section {
+            background: var(--background);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border);
+            margin-bottom: 2rem;
+        }
+
+        .console-section h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+        }
+
+        .console-output {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 1rem;
+            border-radius: var(--radius);
+            font-family: 'SF Mono', 'Monaco', 'Consolas', 'Liberation Mono', monospace;
+            font-size: 0.75rem;
+            max-height: 200px;
+            overflow-y: auto;
+            line-height: 1.5;
+            border: 1px solid #334155;
+        }
+
+        .console-output::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .console-output::-webkit-scrollbar-track {
+            background: #334155;
+        }
+
+        .console-output::-webkit-scrollbar-thumb {
+            background: #64748b;
+            border-radius: 3px;
+        }
+
+        .console-output div {
+            margin-bottom: 0.25rem;
+            word-break: break-word;
+        }
+
+        .console-output .timestamp {
+            color: #94a3b8;
+        }
+
+        .console-output .success {
+            color: #34d399;
+        }
+
+        .console-output .error {
+            color: #f87171;
+        }
+
+        .console-output .warning {
+            color: #fbbf24;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 2rem 0;
+            border-top: 1px solid var(--border);
+            margin-top: 2rem;
+        }
+
+        .footer p {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        .footer a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Container specific styles */
+        #containerPreview {
+            border: 2px dashed var(--primary) !important;
+            background: rgba(37, 99, 235, 0.05) !important;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 1rem;
+            }
+
+            .header {
+                padding: 2rem 0 1.5rem;
+            }
+
+            .header h1 {
+                font-size: 1.75rem;
+            }
+
+            .demo-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .control-grid {
+                flex-direction: column;
+            }
+
+            .control-group {
+                min-width: unset;
+            }
+
+            .demo-buttons {
+                flex-direction: column;
+            }
+
+            .btn {
+                flex: none;
+            }
+
+            .console-output {
+                font-size: 0.7rem;
+                max-height: 150px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 1.5rem;
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .demo-card {
+                padding: 1rem;
+            }
+
+            .controls {
+                padding: 1rem;
+            }
+
+            .console-section {
+                padding: 1rem;
+            }
+
+            .loader-preview {
+                height: 60px;
+            }
+        }
+
+        /* Reduced motion */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+
+            .demo-card:hover {
+                transform: none;
+            }
+        }
+
+        /* High contrast mode */
+        @media (prefers-contrast: high) {
+            :root {
+                --border: #000000;
+                --text-primary: #000000;
+                --text-secondary: #000000;
+            }
+        }
+
+        /* Dark mode support */
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --background: #1e293b;
+                --surface: #0f172a;
+                --border: #334155;
+                --text-primary: #f1f5f9;
+                --text-secondary: #cbd5e1;
+                --text-muted: #64748b;
+            }
+
+            .console-output {
+                background: #0f172a;
+                border-color: #1e293b;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>@grenishrai/loaderjs<span class="version-badge">v2.0.0</span></h1>
+            <p>Professional Loading Animation Library</p>
+        </header>
+
+        <section class="controls">
+            <h3>Configuration</h3>
+            <div class="control-grid">
+                <div class="control-group">
+                    <label for="loaderType">Type</label>
+                    <select id="loaderType">
+                        <option value="round">Round</option>
+                        <option value="bar">Bar</option>
+                        <option value="pulse" selected>Pulse</option>
+                        <option value="wave">Wave</option>
+                        <option value="playDots1">Play Dots 1</option>
+                        <option value="playDots2">Play Dots 2</option>
+                        <option value="playDots3">Play Dots 3</option>
+                        <option value="scroll">Scroll</option>
+                        <option value="square">Square</option>
+                        <option value="lock">Lock</option>
+                    </select>
+                </div>
+                <div class="control-group">
+                    <label for="loaderSpeed">Speed</label>
+                    <select id="loaderSpeed">
+                        <option value="slow">Slow</option>
+                        <option value="normal" selected>Normal</option>
+                        <option value="fast">Fast</option>
+                    </select>
+                </div>
+                <div class="control-group">
+                    <label for="ariaLabel">Accessibility Label</label>
+                    <input type="text" id="ariaLabel" value="Loading..." placeholder="ARIA label">
+                </div>
+            </div>
+        </section>
+
+        <main class="demo-grid">
+            <div class="demo-card">
+                <h4>Basic Loader</h4>
+                <p>Simple inline loader for content loading states</p>
+                <div class="loader-preview" id="basicPreview"></div>
+                <div class="demo-buttons">
+                    <button class="btn btn-primary" id="showBasic">Show</button>
+                    <button class="btn btn-secondary" id="hideBasic">Hide</button>
+                    <button class="btn btn-success" id="toggleBasic">Toggle</button>
+                </div>
+            </div>
+
+            <div class="demo-card">
+                <h4>Overlay Loader</h4>
+                <p>Full-screen overlay for blocking interactions</p>
+                <div class="loader-preview">
+                    <small>Click "Show Overlay" to see full-screen effect</small>
+                </div>
+                <div class="demo-buttons">
+                    <button class="btn btn-primary" id="showOverlay">Show Overlay</button>
+                    <button class="btn btn-danger" id="hideOverlay">Hide</button>
+                </div>
+            </div>
+
+            <div class="demo-card">
+                <h4>Container Loader</h4>
+                <p>Loader confined to specific container element</p>
+                <div class="loader-preview" id="containerPreview"></div>
+                <div class="demo-buttons">
+                    <button class="btn btn-primary" id="showContainer">Show</button>
+                    <button class="btn btn-secondary" id="hideContainer">Hide</button>
+                </div>
+            </div>
+
+            <div class="demo-card">
+                <h4>Dynamic Types</h4>
+                <p>Real-time type changes demonstration</p>
+                <div class="loader-preview" id="dynamicPreview"></div>
+                <div class="demo-buttons">
+                    <button class="btn btn-primary" id="startDynamic">Start</button>
+                    <button class="btn btn-danger" id="stopDynamic">Stop</button>
+                </div>
+            </div>
+
+            <div class="demo-card">
+                <h4>Event System</h4>
+                <p>Custom events for show/hide/destroy actions</p>
+                <div class="loader-preview" id="eventPreview"></div>
+                <div class="demo-buttons">
+                    <button class="btn btn-primary" id="showEvent">Show</button>
+                    <button class="btn btn-secondary" id="hideEvent">Hide</button>
+                    <button class="btn btn-danger" id="destroyEvent">Destroy</button>
+                </div>
+            </div>
+
+            <div class="demo-card">
+                <h4>Error Handling</h4>
+                <p>Professional validation and error management</p>
+                <div class="loader-preview">
+                    <small>Check console for error examples</small>
+                </div>
+                <div class="demo-buttons">
+                    <button class="btn btn-danger" id="triggerErrors">Trigger Errors</button>
+                    <button class="btn btn-success" id="validLoader">Valid Example</button>
+                </div>
+            </div>
+        </main>
+
+        <section class="console-section">
+            <h3>Console Output</h3>
+            <div class="console-output" id="logOutput">
+                <div>Welcome to @grenishrai/loaderjs v2.0.0</div>
+                <div>Use the controls above to interact with different features</div>
+            </div>
+            <div style="margin-top: 1rem;">
+                <button class="btn btn-secondary" onclick="clearLog()">Clear Console</button>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <p>
+                Made with ❤️ by <strong>grenishrai</strong> | 
+                <a href="https://github.com/Grenish/loaderjs" target="_blank" rel="noopener noreferrer">View on GitHub</a>
+            </p>
+        </footer>
+    </div>
+
     <script type="module" src="./index.js"></script>
-  </head>
-  <body>
-    
+    <script type="module">
+      // Demo-specific JavaScript for the HTML page
+      import Loader, { LoaderError } from "./Loader.js";
+
+      // Global variables
+      let currentLoaders = {};
+      let dynamicInterval = null;
+
+      // Logging function
+      function log(message, type = "info") {
+        const logOutput = document.getElementById("logOutput");
+        const timestamp = new Date().toLocaleTimeString();
+        const logEntry = document.createElement("div");
+        
+        const typeClass = type === "error" ? "error" : type === "success" ? "success" : type === "warning" ? "warning" : "";
+        
+        logEntry.innerHTML = `<span class="timestamp">[${timestamp}]</span> <span class="${typeClass}">${message}</span>`;
+        logOutput.appendChild(logEntry);
+        logOutput.scrollTop = logOutput.scrollHeight;
+      }
+
+      window.clearLog = function () {
+        const logOutput = document.getElementById("logOutput");
+        logOutput.innerHTML = `
+          <div>Welcome to @grenishrai/loaderjs v2.0.0</div>
+          <div>Use the controls above to interact with different features</div>
+        `;
+      };
+
+      // Get current settings
+      function getCurrentSettings() {
+        return {
+          type: document.getElementById("loaderType").value,
+          speed: document.getElementById("loaderSpeed").value,
+          ariaLabel: document.getElementById("ariaLabel").value,
+        };
+      }
+
+      // Basic Loader Demo
+      document.getElementById("showBasic").addEventListener("click", async () => {
+        try {
+          if (currentLoaders.basic) {
+            await currentLoaders.basic.show();
+            return;
+          }
+
+          const settings = getCurrentSettings();
+          currentLoaders.basic = new Loader({
+            ...settings,
+            container: "#basicPreview",
+            onShow: (loader) => log(`Basic loader shown: ${loader.type}`, "success"),
+            onHide: (loader) => log(`Basic loader hidden: ${loader.type}`, "info"),
+          });
+
+          await currentLoaders.basic.show();
+        } catch (error) {
+          log(`Error: ${error.message}`, "error");
+        }
+      });
+
+      document.getElementById("hideBasic").addEventListener("click", async () => {
+        if (currentLoaders.basic) {
+          await currentLoaders.basic.hide();
+        }
+      });
+
+      document.getElementById("toggleBasic").addEventListener("click", async () => {
+        if (currentLoaders.basic) {
+          await currentLoaders.basic.toggle();
+        }
+      });
+
+      // Overlay Loader Demo
+      document.getElementById("showOverlay").addEventListener("click", async () => {
+        try {
+          const settings = getCurrentSettings();
+          currentLoaders.overlay = new Loader({
+            ...settings,
+            overlay: true,
+            onShow: () => log("Overlay loader shown", "success"),
+            onHide: () => log("Overlay loader hidden", "info"),
+          });
+
+          await currentLoaders.overlay.show();
+        } catch (error) {
+          log(`Error: ${error.message}`, "error");
+        }
+      });
+
+      document.getElementById("hideOverlay").addEventListener("click", async () => {
+        if (currentLoaders.overlay) {
+          await currentLoaders.overlay.hide();
+          currentLoaders.overlay.destroy();
+          currentLoaders.overlay = null;
+        }
+      });
+
+      // Container Loader Demo
+      document.getElementById("showContainer").addEventListener("click", async () => {
+        try {
+          const settings = getCurrentSettings();
+          currentLoaders.container = new Loader({
+            ...settings,
+            container: "#containerPreview",
+          });
+
+          await currentLoaders.container.show();
+          log("Container loader shown", "success");
+        } catch (error) {
+          log(`Error: ${error.message}`, "error");
+        }
+      });
+
+      document.getElementById("hideContainer").addEventListener("click", async () => {
+        if (currentLoaders.container) {
+          await currentLoaders.container.hide();
+          log("Container loader hidden", "info");
+        }
+      });
+
+      // Dynamic Loader Demo
+      document.getElementById("startDynamic").addEventListener("click", async () => {
+        try {
+          const settings = getCurrentSettings();
+          currentLoaders.dynamic = new Loader({
+            type: "round",
+            speed: settings.speed,
+            container: "#dynamicPreview",
+          });
+
+          await currentLoaders.dynamic.show();
+
+          const types = Loader.getValidTypes();
+          let index = 0;
+
+          dynamicInterval = setInterval(() => {
+            index = (index + 1) % types.length;
+            currentLoaders.dynamic.type = types[index];
+            log(`Type changed to: ${types[index]}`, "info");
+          }, 1000);
+
+          log("Dynamic loader started", "success");
+        } catch (error) {
+          log(`Error: ${error.message}`, "error");
+        }
+      });
+
+      document.getElementById("stopDynamic").addEventListener("click", async () => {
+        if (dynamicInterval) {
+          clearInterval(dynamicInterval);
+          dynamicInterval = null;
+        }
+        if (currentLoaders.dynamic) {
+          await currentLoaders.dynamic.hide();
+          log("Dynamic loader stopped", "warning");
+        }
+      });
+
+      // Event Demo
+      document.addEventListener("loader:show", (event) => {
+        if (event.detail.loader === currentLoaders.event) {
+          log("Event: loader:show fired", "success");
+        }
+      });
+
+      document.addEventListener("loader:hide", (event) => {
+        if (event.detail.loader === currentLoaders.event) {
+          log("Event: loader:hide fired", "info");
+        }
+      });
+
+      document.addEventListener("loader:destroy", (event) => {
+        log("Event: loader:destroy fired", "warning");
+      });
+
+      document.getElementById("showEvent").addEventListener("click", async () => {
+        try {
+          const settings = getCurrentSettings();
+          currentLoaders.event = new Loader({
+            ...settings,
+            container: "#eventPreview",
+          });
+
+          await currentLoaders.event.show();
+        } catch (error) {
+          log(`Error: ${error.message}`, "error");
+        }
+      });
+
+      document.getElementById("hideEvent").addEventListener("click", async () => {
+        if (currentLoaders.event) {
+          await currentLoaders.event.hide();
+        }
+      });
+
+      document.getElementById("destroyEvent").addEventListener("click", () => {
+        if (currentLoaders.event) {
+          currentLoaders.event.destroy();
+          currentLoaders.event = null;
+        }
+      });
+
+      // Error Handling Demo
+      document.getElementById("triggerErrors").addEventListener("click", () => {
+        try {
+          new Loader({ type: "invalid-type" });
+        } catch (error) {
+          if (error instanceof LoaderError) {
+            log(`LoaderError [${error.code}]: ${error.message}`, "error");
+          }
+        }
+
+        try {
+          new Loader({ speed: "super-fast" });
+        } catch (error) {
+          if (error instanceof LoaderError) {
+            log(`LoaderError [${error.code}]: ${error.message}`, "error");
+          }
+        }
+
+        try {
+          new Loader({ container: "#non-existent-container" });
+        } catch (error) {
+          if (error instanceof LoaderError) {
+            log(`LoaderError [${error.code}]: ${error.message}`, "error");
+          }
+        }
+      });
+
+      document.getElementById("validLoader").addEventListener("click", async () => {
+        try {
+          const validLoader = await Loader.create({
+            type: "pulse",
+            speed: "fast",
+            overlay: true,
+            ariaLabel: "Validation successful!",
+          });
+
+          setTimeout(() => {
+            validLoader.destroy();
+            log("Valid loader created and destroyed successfully", "success");
+          }, 2000);
+        } catch (error) {
+          log(`Error: ${error.message}`, "error");
+        }
+      });
+
+      // Initialize
+      log(`Demo initialized. Available types: ${Loader.getValidTypes().join(", ")}`, "info");
+      log(`Available speeds: ${Loader.getValidSpeeds().join(", ")}`, "info");
+    </script>
   </body>
 </html>
