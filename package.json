@@ -1,6 +1,6 @@
 {
   "name": "@grenishrai/loaderjs",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "A professional, lightweight JavaScript library for customizable loading animations. Features TypeScript support, accessibility, event system, overlay support, and comprehensive error handling for modern web applications.",
   "main": "index.js",
   "type": "module",
